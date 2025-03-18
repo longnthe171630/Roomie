@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './Roommate.css';
-import Header from '../../header';
-import Footer from '../../footer';
+import Header from '../../components/Layout/Header/Header';
+import Footer from '../../components/Layout/Footer/Footer';
+import 'aos/dist/aos.css';
 
 const RoommateCard = ({ image, title, location, price, people, date, avatar, author, time }) => {
   return (
@@ -51,6 +52,7 @@ const RoommateCard = ({ image, title, location, price, people, date, avatar, aut
 };
 
 const Roommate = () => {
+  const topRef = useRef(null);
   const [activePage, setActivePage] = useState(1);
   const [searchFilters, setSearchFilters] = useState({
     location: '',
@@ -61,7 +63,7 @@ const Roommate = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('roommates');
   const [scrolled, setScrolled] = useState(false);
-
+  
   // Xử lý scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -161,6 +163,7 @@ const Roommate = () => {
   // Xử lý thay đổi trang
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
+    document.documentElement.scrollTop = 0; // Scroll to top immediately
     // Bạn có thể thêm xử lý tải dữ liệu trang mới ở đây
   };
 
@@ -180,7 +183,7 @@ const Roommate = () => {
   };
 
   return (
-    <div className="roommate-page">
+    <div className="roommate-page" ref={topRef}>
       <Header 
         scrolled={scrolled}
         isMenuOpen={isMenuOpen}
@@ -283,8 +286,8 @@ const Roommate = () => {
             <i className="next-icon">›</i>
           </button>
         </div>
-        <Footer/>
       </div>
+      <Footer/>
     </div>
   );
 };

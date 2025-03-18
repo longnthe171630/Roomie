@@ -1,7 +1,7 @@
 import React, {useState } from "react";
 import './Login_Register.css';
-import Footer from '../../footer';
-import Header from '../../header';
+import Footer from '../../components/Layout/Footer/Footer';
+import Header from '../../components/Layout/Header/Header';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Link } from 'react-router-dom';

@@ -1,24 +1,30 @@
+// src/components/Footer.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
-
-export const Footer = () => {
+const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="footer" id="contact">
       <div className="footer-content">
-        <div className="footer-section">
-          <div className="logo">Roomie</div>
-          <div className="footer-links">
-            <a href="/privacy" className="footer-link">Chính sách bảo mật</a>
-            <a href="/terms" className="footer-link">Điều khoản sử dụng</a>
-          </div>
+        <div className="footer-section" data-aos="fade-up" data-aos-delay="100">
+          <h3>LOGO</h3>
+          <p> Chính sách bảo mật </p>
+          <p> Điều khoản dịch vụ </p>
         </div>
-        <div className="footer-section">
-          <div className="contact-info">
-            <p>Email: 123@gmail.com</p>
-            <p>Điện thoại: 0123456789</p>
-          </div>
+        <div className="footer-section" data-aos="fade-up" data-aos-delay="200">
+          <h3>Liên Kết Nhanh</h3>
+          <p>Facebook: Roomie</p>
+          <p>Instagram: roomie_day</p>
+          <p>Tiktok: Roomie Nè!</p>
+        </div>
+        <div className="footer-section" data-aos="fade-up" data-aos-delay="300">
+          <h3>Thông Tin Liên Hệ</h3>
+          <p>Email: Roomie@gmail.com</p>
+          <p>CSKH: 0123456789</p>
         </div>
       </div>
     </footer>
   );
-}; 
+};
+
+export default Footer;  

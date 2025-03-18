@@ -3,8 +3,8 @@ import "./Homepage.css";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Link } from 'react-router-dom';
-import Footer from '../../footer';
-import Header from '../../header';
+import Footer from '../../components/Layout/Footer/Footer';
+import Header from '../../components/Layout/Header/Header';
 
 export const Homepage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -89,7 +89,7 @@ export const Homepage = () => {
                   src="https://c.animaapp.com/5GdoH1sZ/img/image-1-1@2x.png"
                 />
                 <div className="author-info">
-                  <div className="author-name">LOREM IPSUM DOLOR SIT AMET</div>
+                  <div className="author-name">Yakult</div>
                   <div className="rating">
                     <img src="https://c.animaapp.com/5GdoH1sZ/img/star-19-1.svg" alt="Star" />
                     <img src="https://c.animaapp.com/5GdoH1sZ/img/star-19-1.svg" alt="Star" />
@@ -114,7 +114,7 @@ export const Homepage = () => {
                   src="https://c.animaapp.com/5GdoH1sZ/img/image-2-1@2x.png"
                 />
                 <div className="author-info">
-                  <div className="author-name">LOREM IPSUM DOLOR SIT AMET</div>
+                  <div className="author-name">Manager_menasw</div>
                   <div className="rating">
                     <img src="https://c.animaapp.com/5GdoH1sZ/img/star-19-1.svg" alt="Star" />
                     <img src="https://c.animaapp.com/5GdoH1sZ/img/star-19-1.svg" alt="Star" />
