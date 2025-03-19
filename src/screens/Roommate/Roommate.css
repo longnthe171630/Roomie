@@ -27,7 +27,7 @@
 /* Search container */
 .search-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
@@ -55,7 +55,7 @@
   padding: 15px 20px;
   border: none;
   background-color: transparent;
-  font-size: 14px;
+  font-size: 20px;
   color: #333;
   transition: all 0.3s ease;
 }
@@ -85,6 +85,40 @@
   content: "🔍";
   font-size: 18px;
   color: white;
+}
+
+/* Tùy chỉnh cho select dropdown */
+.search-tab select.search-input {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  appearance: none; /* Loại bỏ style mặc định của browser */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23333' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.search-tab select.search-input:focus {
+  outline: none;
+  background-color: #fff;
+}
+
+.search-tab select.search-input option {
+  background-color: #fff;
+  color: #333;
+  padding: 10px;
+}
+
+/* Hover effect for options */
+.search-tab select.search-input option:hover {
+  background-color: #f0f5ff;
 }
 
 /* Roommate container */
@@ -353,6 +387,11 @@
   
   .search-button {
     width: 100%;
+  }
+  
+  .search-tab select.search-input {
+    font-size: 13px;
+    padding: 12px 15px;
   }
   
   .roommate-grid {

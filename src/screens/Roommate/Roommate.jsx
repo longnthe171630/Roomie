@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import './Roommate.css';
 import Header from '../../components/Layout/Header/Header';
 import Footer from '../../components/Layout/Footer/Footer';
@@ -7,7 +7,6 @@ import 'aos/dist/aos.css';
 
 const RoommateCard = ({ image, title, location, price, people, date, avatar, author, time }) => {
   return (
-    
     <div className="roommate-card">
       <div className="roommate-image-container">
         <img src={image} alt={title} className="roommate-image" />
@@ -15,21 +14,13 @@ const RoommateCard = ({ image, title, location, price, people, date, avatar, aut
       <h3 className="roommate-title">{title}</h3>
       
       <div className="roommate-tags">
-        <div className="tag location-tag">
-          {location}
-        </div>
-        <div className="tag price-tag">
-          {price}
-        </div>
+        <div className="tag location-tag">{location}</div>
+        <div className="tag price-tag">{price}</div>
       </div>
       
       <div className="roommate-tags">
-        <div className="tag people-tag">
-          {people}
-        </div>
-        <div className="tag date-tag">
-          {date}
-        </div>
+        <div className="tag people-tag">{people}</div>
+        <div className="tag date-tag">{date}</div>
       </div>
       
       <div className="roommate-author">
@@ -51,9 +42,50 @@ const RoommateCard = ({ image, title, location, price, people, date, avatar, aut
   );
 };
 
+// Simple pagination component that uses URL params
+const UrlPagination = ({ activePage, totalPages, onPageChange }) => {
+  const handleClick = (e, page) => {
+    e.preventDefault();
+    e.stopPropagation(); // Ngăn chặn sự kiện lan rộng
+    if (page < 1 || page > totalPages) return;
+    onPageChange(page);
+  };
+  
+  return (
+    <div className="pagination">
+      <button 
+        className="pagination-next" 
+        onClick={(e) => handleClick(e, activePage - 1)}
+        disabled={activePage === 1}
+      >
+        <i className="previous-icon">‹</i>
+      </button>
+      
+      {[...Array(totalPages)].map((_, index) => (
+        <button 
+          key={index + 1}
+          className={`pagination-dot ${activePage === index + 1 ? 'active' : ''}`}
+          onClick={(e) => handleClick(e, index + 1)}
+        ></button>
+      ))}
+      
+      <button 
+        className="pagination-next" 
+        onClick={(e) => handleClick(e, activePage + 1)}
+        disabled={activePage === totalPages}
+      >
+        <i className="next-icon">›</i>
+      </button>
+    </div>
+  );
+};
+
 const Roommate = () => {
   const topRef = useRef(null);
-  const [activePage, setActivePage] = useState(1);
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activePage = parseInt(searchParams.get('page') || '1', 10);
+  
   const [searchFilters, setSearchFilters] = useState({
     location: '',
     budget: '',
@@ -160,11 +192,15 @@ const Roommate = () => {
     }
   ];
 
-  // Xử lý thay đổi trang
+  // Sử dụng URL params để theo dõi trạng thái trang
   const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-    document.documentElement.scrollTop = 0; // Scroll to top immediately
-    // Bạn có thể thêm xử lý tải dữ liệu trang mới ở đây
+    if (pageNumber === activePage) return;
+    
+    // Cập nhật URL với số trang mới - không cần xử lý cuộn trang ở đây nữa
+    // vì RouteWrapper đã được thiết lập để không cuộn khi chỉ thay đổi search params
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', pageNumber.toString());
+    setSearchParams(newParams);
   };
 
   // Xử lý thay đổi bộ lọc
@@ -182,6 +218,14 @@ const Roommate = () => {
     console.log('Search with filters:', searchFilters);
   };
 
+  // Effect để xử lý dữ liệu khi trang thay đổi
+  useEffect(() => {
+    // Giả lập việc tải dữ liệu cho trang hiện tại
+    console.log(`Loading data for page ${activePage}`);
+    
+    // Tải dữ liệu mới ở đây
+  }, [activePage]);
+
   return (
     <div className="roommate-page" ref={topRef}>
       <Header 
@@ -196,44 +240,64 @@ const Roommate = () => {
           <div className="search-container">
             <div className="search-tabs">
               <div className="search-tab">
-                <input 
-                  type="text" 
+                <select 
                   name="location" 
-                  placeholder="Vị trí" 
                   value={searchFilters.location}
                   onChange={handleFilterChange}
                   className="search-input"
-                />
+                >
+                  <option value="">Chọn vị trí</option>
+                  <option value="Hà Nội">Hà Nội</option>
+                  <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                  <option value="Đà Nẵng">Đà Nẵng</option>
+                  <option value="Nha Trang">Nha Trang</option>
+                  <option value="Huế">Huế</option>
+                  <option value="Cần Thơ">Cần Thơ</option>
+                </select>
               </div>
               <div className="search-tab">
-                <input 
-                  type="text" 
+                <select 
                   name="budget" 
-                  placeholder="Ngân sách" 
                   value={searchFilters.budget}
                   onChange={handleFilterChange}
                   className="search-input"
-                />
+                >
+                  <option value="">Chọn ngân sách</option>
+                  <option value="Dưới 1 triệu">Dưới 1 triệu</option>
+                  <option value="1-2 triệu">1-2 triệu</option>
+                  <option value="2-3 triệu">2-3 triệu</option>
+                  <option value="3-5 triệu">3-5 triệu</option>
+                  <option value="Trên 5 triệu">Trên 5 triệu</option>
+                </select>
               </div>
               <div className="search-tab">
-                <input 
-                  type="text" 
+                <select 
                   name="roomType" 
-                  placeholder="Loại phòng" 
                   value={searchFilters.roomType}
                   onChange={handleFilterChange}
                   className="search-input"
-                />
+                >
+                  <option value="">Chọn loại phòng</option>
+                  <option value="Chung cư">Chung cư</option>
+                  <option value="Nhà nguyên căn">Nhà nguyên căn</option>
+                  <option value="Phòng trọ">Phòng trọ</option>
+                  <option value="Ký túc xá">Ký túc xá</option>
+                  <option value="Homestay">Homestay</option>
+                </select>
               </div>
               <div className="search-tab">
-                <input 
-                  type="text" 
+                <select 
                   name="timeframe" 
-                  placeholder="Thời gian" 
                   value={searchFilters.timeframe}
                   onChange={handleFilterChange}
                   className="search-input"
-                />
+                >
+                  <option value="">Chọn thời gian</option>
+                  <option value="Ngay bây giờ">Ngay bây giờ</option>
+                  <option value="Trong tháng này">Trong tháng này</option>
+                  <option value="Trong 3 tháng tới">Trong 3 tháng tới</option>
+                  <option value="Trên 3 tháng">Trên 3 tháng</option>
+                </select>
               </div>
               <button className="search-button" onClick={handleSearch}>
                 <i className="search-icon"></i>
@@ -261,31 +325,11 @@ const Roommate = () => {
           ))}
         </div>
 
-        <div className="pagination">
-          <button 
-            className={`pagination-dot ${activePage === 1 ? 'active' : ''}`}
-            onClick={() => handlePageChange(1)}
-          ></button>
-          <button 
-            className={`pagination-dot ${activePage === 2 ? 'active' : ''}`}
-            onClick={() => handlePageChange(2)}
-          ></button>
-          <button 
-            className={`pagination-dot ${activePage === 3 ? 'active' : ''}`}
-            onClick={() => handlePageChange(3)}
-          ></button>
-          <button 
-            className={`pagination-dot ${activePage === 4 ? 'active' : ''}`}
-            onClick={() => handlePageChange(4)}
-          ></button>
-          <button 
-            className={`pagination-dot ${activePage === 5 ? 'active' : ''}`}
-            onClick={() => handlePageChange(5)}
-          ></button>
-          <button className="pagination-next" onClick={() => handlePageChange(activePage + 1)}>
-            <i className="next-icon">›</i>
-          </button>
-        </div>
+        <UrlPagination 
+          activePage={activePage}
+          totalPages={5}
+          onPageChange={handlePageChange}
+        />
       </div>
       <Footer/>
     </div>
