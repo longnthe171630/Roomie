@@ -1,10 +1,10 @@
 .layout {
-  min-height: 100vh;
+  min-height: 100vh; /* Ensure the layout takes at least the full height of the viewport */
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Ensure children stack vertically */
 }
 
 .main-content {
-  flex: 1;
+  flex: 1; /* Allow main content to grow and fill available space */
   margin-top: 72px; /* Height of header */
-} 
+}
