@@ -9,7 +9,7 @@ const RouteWrapper = ({ children }) => {
   const prevPathnameRef = useRef(pathname);
   
   // Danh sách các route không cần cuộn lên đầu trang khi thay đổi query params
-  const noScrollRoutes = ['/login_register'];
+  const noScrollRoutes = ['/login_register', '/matches'];
 
   // Sử dụng useEffect để phát hiện thay đổi URL và tải lại trang
   useEffect(() => {

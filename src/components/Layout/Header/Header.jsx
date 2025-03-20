@@ -22,17 +22,17 @@ const Header = ({ scrolled, isMenuOpen, toggleMenu, handleNavClick, activeNav })
               to="/roommate" 
               className={`nav-item ${activeNav === 'roommates' ? 'active' : ''}`}
               onClick={() => handleNavClick('roommates')}
-            >ROOMMATES</Link>
+            >BÀI ĐĂNG</Link>
             <Link 
               to="/matches" 
               className={`nav-item ${activeNav === 'matches' ? 'active' : ''}`}
               onClick={() => handleNavClick('matches')}
-            >MATCHES</Link>
+            >KẾT NỐI</Link>
             <Link 
               to="/blog" 
               className={`nav-item ${activeNav === 'blog' ? 'active' : ''}`}
               onClick={() => handleNavClick('blog')}
-            >BLOG</Link>
+            >BÀI VIẾT</Link>
             
             {/* Auth buttons for mobile */}
             <div className="auth-buttons mobile-auth">

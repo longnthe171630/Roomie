@@ -69,7 +69,7 @@ export const Homepage = () => {
               theo sở thích, thói quen và ngân sách. Tận hưởng không gian sống
               lý tưởng với hệ thống gợi ý thông minh và thông tin minh bạch.
             </p>
-            <a href="#roommates" className="cta-button">Bắt đầu ngay!</a>
+            <a href="/roommate" className="cta-button">Bắt đầu ngay!</a>
           </div>
         </section>
 

@@ -6,6 +6,12 @@
     padding: 50px 0;
     position: relative;
     overflow: visible;
+    width: 100vw; /* Full chiều rộng màn hình */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
   }
   
   .footer::before {
@@ -30,12 +36,14 @@
   }
   
  .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 30px;
-    padding: 0 20px;
-    position: relative;
-    z-index: 1;
+  max-width: 1200px; /* Giới hạn nội dung bên trong */
+  margin: 0 auto; /* Căn giữa nội dung */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
   }
   
 .footer-section h3 {
@@ -105,10 +113,10 @@
       font-size: 15px;
     }
   
-    .cta-button {
+    /* .cta-button {
       padding: 10px 25px;
       font-size: 15px;
-    }
+    } */
   }
   
   @media (max-width: 968px) {
