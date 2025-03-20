@@ -219,3 +219,34 @@
     margin-top: 15px;
   }
 }
+
+.user-avatar-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logout-dropdown {
+  position: absolute;
+  top: 55px; /* Điều chỉnh khoảng cách từ avatar */
+  right: 30;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 8px 12px;
+  z-index: 10;
+}
+
+.logout-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  padding: 1px 5px;
+}
+
+.logout-button:hover {
+  color: #1565c0;
+}

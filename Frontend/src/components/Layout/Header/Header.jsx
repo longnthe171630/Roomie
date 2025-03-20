@@ -1,8 +1,23 @@
-// src/components/Header.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
+
 const Header = ({ scrolled, isMenuOpen, toggleMenu, handleNavClick, activeNav }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    navigate('/login_register');
+  };
+
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>
       <div className="header-content">
@@ -35,22 +50,33 @@ const Header = ({ scrolled, isMenuOpen, toggleMenu, handleNavClick, activeNav })
             >BLOG</Link>
             
             {/* Auth buttons for mobile */}
-            <div className="auth-buttons mobile-auth">
-              <Link to="/login_register" className="login-button">Đăng nhập</Link>
-            </div>
+            {!isLoggedIn ? (
+              <div className="auth-buttons mobile-auth">
+                <Link to="/login_register" className="login-button">Đăng nhập</Link>
+              </div>
+            ) : null}
           </nav>
           <button className="mobile-menu-button" onClick={toggleMenu}>
             {isMenuOpen ? '✕' : '☰'}
           </button>
         </div>
         {/* Auth buttons for desktop */}
-        <div className="auth-buttons desktop-auth">
-          <Link to="/login_register" className="login-button">Đăng nhập</Link>
-        </div>
-
-        <div className="user-avatar">
-          <img src="https://i.pinimg.com/474x/10/8f/eb/108feb8d2c9ba31b736e547e31236452.jpg" alt="User Avatar" className="avatar-img" />
-        </div>
+        {!isLoggedIn ? (
+          <div className="auth-buttons desktop-auth">
+            <Link to="/login_register" className="login-button">Đăng nhập</Link>
+          </div>
+        ) : (
+          <div className="user-avatar-container">
+            <div className="user-avatar" onClick={() => setShowLogout(!showLogout)}>
+              <img src="https://i.pinimg.com/474x/10/8f/eb/108feb8d2c9ba31b736e547e31236452.jpg" alt="User Avatar" className="avatar-img" />
+            </div>
+            {showLogout && (
+              <div className="logout-dropdown">
+                <button onClick={handleLogout} className="logout-button">Logout</button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );
